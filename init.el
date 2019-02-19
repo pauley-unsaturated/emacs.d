@@ -176,7 +176,18 @@
 ;;----------------------------------------------------------------------------
 (require 'init-local nil t)
 
+(require-package 'dracula-theme)
 (load-theme 'dracula t)
+
+(defun set-background-for-terminal (&optional frame)
+  (or frame (setq frame (selected-frame)))
+  "unsets the background color in terminal mode"
+  (unless (display-graphic-p frame)
+    (set-face-background 'default "unspecified-bg" frame)))
+(add-hook 'after-make-frame-functions 'set-background-for-terminal)
+(add-hook 'window-setup-hook 'set-background-for-terminal)
+
+(require-package 'powerline)
 (powerline-default-theme)
 
 ;; define function to shutdown emacs server instance
